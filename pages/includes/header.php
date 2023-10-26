@@ -27,7 +27,7 @@
 <body class="bg-dark text-light">
     <div class="container">
         <div class="jumbotron text-center">
-        <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Source+Code+Pro&weight=700&size=32&duration=4000&pause=1000&color=A024F7&random=false&width=500&lines=Gerenciador+de+Projetos" alt="Typing SVG" /></a>
+            <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Source+Code+Pro&weight=700&size=32&duration=4000&pause=1000&color=A024F7&random=false&width=500&lines=Gerenciador+de+Projetos" alt="Typing SVG" /></a>
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <a class="navbar-brand" href="index.php">
                     <i class="fas fa-home"></i>
@@ -91,9 +91,15 @@
             case "list-user":
                 include("pages\users\list-user.php");
                 break;
+            case "logout":
+                include("pages\users\logout.php");
+                break;
+            case "dashboard":
+                include("pages\users\dashboard.php");
+                break;
             default:
                 print " ";
         }
         ?>
-        <!-- /.container -->
-        <!-- /.body -->
+    <!-- /.container -->
+<!-- /.body -->

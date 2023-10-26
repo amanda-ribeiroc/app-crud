@@ -36,6 +36,9 @@
             </small>
         </div>
     </div>
+    <div class="form-row mt-2">
+            <p>Já tem conta? <a href="?page=login">faça login.</a></p>
+        </div>
     <div class="mb-3">
         <button type="submit" class="btn btn-primary">Criar Conta</button>
     </div>

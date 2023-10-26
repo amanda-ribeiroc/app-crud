@@ -37,7 +37,6 @@
         break;
 
     case 'deletar':
-        // Suponha que você esteja excluindo um usuário com base no ID
         $id = $_POST["id"];
 
         $sql = "DELETE FROM users WHERE id = $id";

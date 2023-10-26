@@ -1,33 +1,36 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  if (isset($_POST['email']) && isset($_POST['password'])) {
-    $login = $_POST['email'];
-    $senha = $_POST['password'];
 
-    $sql = "SELECT * FROM users WHERE email = '$login'";
-    $res = $conn->query($sql);
+  session_start();
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    if (mysqli_num_rows($res) > 0) {
-      $users = mysqli_fetch_assoc($res);
-      if (password_verify($senha, $users['password'])) {
-        session_start();
-        $_SESSION['email'] = $login;
-        header("Location: pages/users/list-user.php");
-      } else {
-        echo "<script>alert('Senha inválida');</script>";
+    $email = $_POST["email"];
+    $password = $_POST['password'];
+
+    $sql = "SELECT * FROM users WHERE email = ? AND password = ?";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ss", $email, $password);
+    $stmt->execute();
+
+    $res = $stmt->get_result();
+
+    if ($res->num_rows == 1) {
+      $row = $res->fetch_assoc();
+
+      if (password_verify($password, $row['password'])) {
+        $_SESSION["loggedin"] = true;
+
+        header("Location: index.php");
+        exit;
       }
-    } else {
-      echo "<script>alert('Usuário não existe');</script>";
     }
-
-    mysqli_close($conn);
-  } else {
-    echo "<script>alert('Por favor, preencha o formulário de login.');</script>";
+    else {
+      $error = "Usuário e/ou senha incorreto(s)";
+    }
   }
-}
 ?>
 <h1>Entrar</h1>
-<form action="login.php" method="POST">
+<form action="?page=dashboard" method="POST">
   <div class="form-row">
     <div class="col-md-4">
       <label class="col-form-label" for="inlineFormInput">Email</label>
@@ -46,11 +49,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           Lembrar de mim
         </label>
       </div>
+      <div class="form-row mt-2">
+        <p>Ainda não é cadastrado (a)? <a href="?page=new-user">Crie sua conta.</a></p>
+      </div>
     </div>
   </div>
   <div class="form-row mt-1">
     <div class="col-md-4">
       <button type="submit" class="btn btn-primary" id="btn-login">Entrar</button>
     </div>
-  </div>
-</form>

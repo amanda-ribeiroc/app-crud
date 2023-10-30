@@ -60,15 +60,15 @@
 - Os dados das tarefas são armazenados em um banco de dados **MySQL**, com tabelas apropriadas criadas para a finalidade.
 
 ## Banco de dados
-Crie um banco de dados e execute as instruções SQLs abaixo para criar as tabelas `projects` e  `users`:
+Crie um banco de dados e execute as instruções SQLs abaixo para criar as tabelas `projects`, `users` e `tasks`:
 
 ```sql
 -- Criação da tabela "projects"
 CREATE TABLE projects (
     id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-    title VARCHAR(255) NOT NULL COLLATE utf8mb4_general_ci,
+    titulo VARCHAR(255) NOT NULL COLLATE utf8mb4_general_ci,
     description TEXT NOT NULL COLLATE utf8mb4_general_ci,
-    active ENUM('s','n') NOT NULL COLLATE utf8mb4_general_ci,
+    ativo ENUM('s','n') NOT NULL COLLATE utf8mb4_general_ci,
     date TIMESTAMP NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
     PRIMARY KEY (id)
 );
@@ -76,11 +76,26 @@ CREATE TABLE projects (
 -- Criação da tabela "users"
 CREATE TABLE users (
     id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-    name VARCHAR(50) NOT NULL COLLATE utf8mb4_general_ci,
+    name VARCHAR(100) NOT NULL COLLATE utf8mb4_general_ci,
     email VARCHAR(150) NOT NULL COLLATE utf8mb4_general_ci,
     password VARCHAR(20) NOT NULL COLLATE utf8mb4_general_ci,
     username VARCHAR(10) COLLATE utf8mb4_general_ci,
     PRIMARY KEY (id)
+);
+
+-- Criação da tabela "tasks"
+CREATE TABLE tasks (
+    id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    idProject INT(11) NOT NULL,
+    name VARCHAR(50) NOT NULL COLLATE utf8mb4_general_ci,
+    description VARCHAR(300) NOT NULL COLLATE utf8mb4_general_ci,
+    completed TINYINT(1) NOT NULL,
+    notes VARCHAR(150) COLLATE utf8mb4_general_ci DEFAULT NULL,
+    deadline DATE NOT NULL,
+    createdAt DATETIME NOT NULL,
+    updatedAt DATETIME NOT NULL,
+    PRIMARY KEY (id),
+    KEY idx_idProject (idProject)
 );
 ```
 
